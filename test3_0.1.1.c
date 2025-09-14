@@ -10,7 +10,31 @@ struct SEAT
 
 char cmdname[7][20] ={"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};   
 
-int checkseat(char *cmdname_input)
+int reservation(char *reservecheck_input)
+{
+    for (int rea = 0; rea < 7; rea++)
+    {
+        for (int reb = 0; reb < 5; reb++)
+        {
+            for (int rec = 0; rec < 4; rec++)
+            {
+                for (int red = 0; red < 4; red++)
+                {
+                    if (seat[rea][reb][rec][red].seat_status[0] == reservecheck_input[0])
+                    {
+                        printf("日期：%s  ", cmdname[rea]);
+                        printf("楼层：%d  ", reb+1);
+                        printf("行：%d  ", rec+1);
+                        printf("列：%d  ", red+1);
+                        printf("座位被您预约！\n");
+                    }
+                }
+            }
+        }
+    }
+    
+}
+int checkseat(char *cmdname_input,char *checkseat_username)
 {
     char checkseat_input[20];
     int floorinput;
@@ -30,7 +54,21 @@ int checkseat(char *cmdname_input)
                         {
                             for (int idd = 0; idd < 4; idd++)
                             {
-                                printf("%s", seat[iaa][ibb][icc][idd].seat_status);
+                                if (seat[iaa][ibb][icc][idd].seat_status[0] != '0')
+                                {
+                                    if (seat[iaa][ibb][icc][idd].seat_status[0] == checkseat_username[0])
+                                    {
+                                        printf("1");
+                                    }
+                                    else
+                                    {
+                                        printf("2");
+                                    }
+                                }
+                                else
+                                {
+                                    printf("%s", seat[iaa][ibb][icc][idd].seat_status);
+                                }
                             }
                         printf("\n");
                         }
@@ -228,7 +266,8 @@ int main()
                                     }   
                                     else if (strcmp(logininput, "Reservation") == 0)
                                     {
-                                        printf("查询成功！以下是您的预约记录：\n");//待添加预约,还没写完
+                                        printf("查询成功！以下是您的预约记录：\n");
+                                        reservation(usernameinput);
                                     }
                                     else
                                     {   
@@ -237,7 +276,7 @@ int main()
                                         {
                                             if (strcmp(logininput, cmdname[z]) == 0)
                                             {
-                                                checkseat(logininput);
+                                                checkseat(logininput,usernameinput);
                                                 break;
                                             }
                                         }
@@ -245,7 +284,7 @@ int main()
                                         {
                                             if (strcmp(logininput, "Reserve") == 0)
                                             {
-                                                reserveseat(logininput);
+                                                reserveseat(usernameinput);
                                                 saveseat();
                                             }
                                             else

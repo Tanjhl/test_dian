@@ -44,7 +44,7 @@ int reservation(char *reservecheck_input)
                         printf("行：%d  ", rec+1);
                         printf("列：%d  ", red+1);
                         printf("座位被您预约！\n");
-                        flag + 1;
+                        flag += 1;
                     }
                 }
             }
@@ -123,8 +123,9 @@ int reserveseat(char *reserveseat_input)
     char seatre_seat_input[20];
     int line_re;
     int row_re;
-    scanf("%s%s%d%s%d%d", seatre_date_input, seatre_floor_input, &floor_re, seatre_seat_input, &line_re,&row_re);
+    scanf("%s %s %d %s %d %d", seatre_date_input, seatre_floor_input, &floor_re, seatre_seat_input, &line_re, &row_re);
     int zre = 0;
+    int flag_re = 0;
     for (zre = 0; zre < 7; zre++)
     {
         if (strcmp(seatre_date_input, cmdname[zre]) == 0)
@@ -141,44 +142,55 @@ int reserveseat(char *reserveseat_input)
                                     {
                                         printf("预约成功！\n");
                                         seat[zre][floor_re-1][line_re-1][row_re-1].seat_status[0] = usernameinput[0];
+                                        flag_re += 1;
                                     }
                                     else
                                     {
                                         printf("该座位已被预约！\n");
+                                        flag_re += 1;
+                                        break;
                                     }
                                 }
                                 else
                                 {
                                     printf("Error:无法识别的操作1\n");
-                                    break;
+                                    flag_re += 1;
+
+                                    
                                 }   
                             }
                         else
                         {
                             printf("Error:无法识别的操作2\n");
-                            break;
+
+                            flag_re += 1;
+                            
                         }
                     }
                     else
                     {
                         printf("Error:无法识别的操作3\n");
-                        break;
+                        flag_re += 1;
+                        
+                        
 
                     }
                 }
                 else
                 {
                     printf("Error:无法识别的操作4\n");
-                    break;
+                    flag_re += 1;
+                    
+                    
                 }
-                break;
+                
             }
-        else
-        {
-            printf("Error:无法识别的操作5\n");
-            break;
-        }
-    }                                    
+        
+    }    
+    if (flag_re == 0)
+    {
+        printf("Error:无法识别的操作5\n");
+    }                                
 }
 int saveseat()
 {
@@ -335,6 +347,30 @@ int main()
                                     initial();
                                     saveseat();
                                 }
+                                else if (strcmp (logininput,"Reservation") == 0)
+                                {
+                                    printf("以下是所有预约记录：\n");
+                                    for (int adaa = 0; adaa < 7; adaa++)
+                                    {
+                                        for (int adbb = 0; adbb < 5; adbb++)                                        
+                                        {
+                                            for (int adcc = 0; adcc < 4; adcc++)
+                                            {                                                
+                                                for (int addd = 0; addd < 4; addd++)
+                                                {
+                                                    if (seat[adaa][adbb][adcc][addd].seat_status[0] != '0')
+                                                    {
+                                                        printf("日期：%s  ", cmdname[adaa]);
+                                                        printf("楼层：%d  ", adbb+1);
+                                                        printf("行：%d  ", adcc+1);
+                                                        printf("列：%d  ", addd+1);
+                                                        printf("座位被用户%s预约！\n", seat[adaa][adbb][adcc][addd].seat_status);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                                 else
                                 {   
                                     int z = 0;
@@ -350,7 +386,7 @@ int main()
                                     {
                                         if (strcmp(logininput, "Reserve") == 0)
                                         {
-                                            reserveseat(usernameinput);                                                saveseat();
+                                                                                      
                                         }
                                         else
                                         {

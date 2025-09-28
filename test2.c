@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 
 struct{
     char jian[20];
     char zhi[20];
 }rightstrct[10000];
 int main() {
+    SetConsoleOutputCP(CP_UTF8); 
     int i = 0;
     FILE *filetest = fopen("data.txt", "r");
     if (filetest == NULL) {

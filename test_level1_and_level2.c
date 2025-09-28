@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 
 char usernames[26][2];
 int put_items;
@@ -392,6 +393,7 @@ int Admin_reservation_change()
 }
 int main()
 {
+    SetConsoleOutputCP(CP_UTF8); 
     FILE *fp = NULL;
     initial();
     fp = fopen("seat.txt", "r");

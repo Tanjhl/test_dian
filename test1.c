@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <windows.h>
 int main() {
+    SetConsoleOutputCP(CP_UTF8); 
     char input[116];
 
     while (1) {
